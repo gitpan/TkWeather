@@ -1,0 +1,15 @@
+v1.05:	Eliminated "Geo::Weather" module requirement - www.w3.weather.com 
+changed their HTML *AGAIN* and Geo::Weather is apparently keeping up, so I 
+now scrape their page myself.
+Added "browser" and "weatherurl" options, see manpage.
+
+v1.06: Not released.
+
+v1.07: Added ability to fetch weather from wunderground.
+v1.09: Fixed install issues
+v1.31: Added www.noaa.gov as a 3rd datasource choice.  Added metric option.
+       Added warning / alert color to background.
+v1.33: Fix for slight changes in Wunderground site (icon, wind, and visibility).
+v1.34: -not released-
+v1.35: Fix for slight changes in Wunderground & NOAA sites.
+v1.37: Fix to accomodate alternate url in NOAA for the icon image.
