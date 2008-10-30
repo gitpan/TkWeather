@@ -1,91 +1,126 @@
 NAME
-            TkWeather, by Jim Turner c. 2003, 2004, 2005
+            TkWeather, by Jim Turner (c) 2003, 2004, 2005, 2006, 2007, 2008
 
 SYNOPSIS
-            tkweather.pl [zip-code]
+
+     tkweather.pl [--options=values] [zip-code] [site]
+
+     tkweather.pl --help              (display usage message)
 
 DESCRIPTION
-            This program displays a nice square iconic button showing the 
-            current weather condition.  Clicking the button shows the current
-            basic weather condition values, such as temperature, humidity, and 
-            wind.  Clicking again shows additional information, namely the 
-            barometric pressure, UV, visiblility, and "heat index" or 
-            "wind chill" or "misery index".  For anyone not from Houston, Texas,
-            the old "misery index" is the temperature plus dewpoint.  Anything 
-            over 150 is considered "miserable"!  I use this for planning 
-            workouts.  The default is to use the more modern "heat index".  
-            Specify "index=misery" for the old Houston "misery index".  
-            "wind chill" is used if the temperature is below 70 and wind 
-            is >= 10mph regardless.
+
+	This program displays a nice square iconic button showing the 
+	current weather condition.  Clicking the button shows the current
+	basic weather condition values, such as temperature, humidity, and 
+	wind.  Clicking again shows additional information, namely the 
+	barometric pressure, UV, visiblility, and "heat index" or 
+	"wind chill" or "misery index".  
+	Holding the [Shift] key while 
+	clicking displays a webpage showing the detailed weather info. 
+	Holding the [Ctrl] key while clicking changes to the next weather 
+	site.  
+	Holding the [Ctrl] key while right-clicking changes to the previous 
+	weather site.
+	Double-clicking or holding the [Alt] key while clicking refreshes the 
+	data. 
+	Holding the [Shift] and [Ctrl] keys simultainously while clicking 
+	exits the program.
+	
+	For anyone not from Houston, Texas,
+	the old "misery index" is the temperature plus dewpoint.  Anything 
+	over 150 is considered "miserable"!  I use this for planning 
+	workouts.  The default is to use the more modern "heat index".  
+	Specify "index=misery" for the old Houston "misery index".  
+	"wind chill" is used if the temperature is below 70 and wind 
+	is >= 10mph regardless.
+
+	"site", is currently 0: "weather.com" (weather.com) or 1: "wunderground"
+	(www.wunderground.com), 2: NOAA, or 3: Weatherbug.  If it fails on 
+	the selected one, it tries the next site.  The default is 0 
+	(weather.com).  
 
 CONFIGURATION
-            How to set up:
 
-            1)  This program fetches the current conditions every 15 
-            minutes (900 seconds) from www.weather.com,  
-            www.wunderground.com, or www.noaa.gov.  
+     How to set up (Windows or Linux/Unix):
 
-            2)  Create a "tkweather" directory in your home directory.
+     1)  This program fetches the current conditions every 15 
+     minutes (900 seconds) from www.weather.com,  
+     www.wunderground.com, www.noaa.gov, or weatherbug.  
 
-            3)  You will also need to specify your zipcode either as the 
-            command-line argument or add a "zipcode=yourzip" line in 
-            $HOME/tkweather/tkweather.cfg
-            Otherwise you get the weather at the author's zipcode!
+	Windows users:  
 
-            4)  The optional file:  $HOME/tkweather/tkweather.cfg takes the
-            format (defaults shown below):  Any line starting with "#" is 
-            ignored as a comment.
+	If installing on Windows, simply run the self-extracting exe, 
+	which will install everything automatically and only do step 4 
+	below.  If the program crashes, try running the 
+	tkweather_nogui.exe version and examine the output.
 
-            geometry=+100+100
-            zipcode=76087
-            #BROWSER TO BE INVOKED IF USER PRESSES SHIFT-CLICK ON BUTTON. 
-            browser=mozilla
-            #URL USED FOR SCRAPING WEATHER DATA.
-            weatherurl=http://www.w3.weather.com/weather/local/<ZIP>?lswe=<ZIP>&lwsa=WeatherLocalUndeclared
-            #COMMAND URL TO BE INVOKED IF USER PRESSES SHIFT-CLICK ON BUTTON.
-            #UP TO 3 URLS MAY BE ENTERED FOR EACH OF THE 3 STATIONS SEPARATED BY "|". 
-            weathercmd=http://www.wunderground.com/cgi-bin/findweather/getForecast?query=<ZIP> &
-            #MILLISECONDS TO WAIT BETWEEN QUERIES TO THE WEATHER URL.
-            checkmsec=900000
-            #BUTTON RELIEF (CHOICES:  flat, groove, raised, ridge, sunken)
-            relief=ridge
-            #INDEX:  "misery": USE OLD "MISERY INDEX" (HEAT+DEWPOINT),
-            #OTHERWISE ("heat") USE MODERN "HEAT INDEX" AS REPORTED.
-            #NOTE:  WIND CHILL IS REPORTED IF TEMP. < 70 AND WIND >= 10 MPH
-            #REGARDLESS OF THIS SETTING!
-            index=heat
-            #OVERRIDEDIRECT ARGUMENT 0=MANAGED BY WINDOWMANAGER (DECORATE)
-            #1=BYPASS WINDOWMANAGER (NO DECORATION).  USE 0 IF DOCKING IN
-            #WINDOWMAKER OR AFTERSTEP.
-            windowmgr=0
-            #STARTUP ICON IMAGE (MUST BE IN $ENV{HOME}/tkweather/)
-            startimage=tkweather.gif
-            #NORMAL TEXT FOREGROUND COLOR
-            normalcolor=green
-            #WARNING COLOR
-            warningcolor=yellow
-            #ALERT COLOR
-            alertcolor=red
-            #NORMAL BACKGROUND COLOR
-            bgcolor=black
-            #SHOW WARNING/ALERT COLOR IN BACKGROUND OF ICON (0=OLD WAY - BGCOLOR)
-            bgwarn=1
-            #CONVERT TEMPS AND WINDSPEED TO METRIC, IF SET.
-            metric=0
-            #DO NOT DISPLAY MESSAGE TO STDERR WHEN FETCHING WEATHER FROM WEB:
-            silent=0
-            #DO NOT DUMP DEBUG INFORMATION TO STDERR
-            debug=0
+	For Linux / source users:
 
-            5)  Copy the image "tkweather.gif" to $HOME/tkweather/
+     2)  Create a "tkweather" directory in your home directory
 
-            6)  Copy tkweather.pl to somewhere in your PATH or wherever you 
-            want to be able to run it from.  Make sure line 1 points to your
-            perl interpreter.
+     3)  You will also need to specify your zipcode either as the 
+     command-line argument or add a "zipcode=yourzip" line in 
+     $HOME/tkweather/tkweather.cfg
+     Otherwise you get the weather at the author's zipcode!
 
-            7)  To make this app appear in your AfterStep/Windowmaker "wharf", 
-            add the following to your config file:
-            *Wharf Tkwather - MaxSwallow "Tkweather" tkweather.pl &
-        
-            8)  Enjoy!
+     4)  The optional file:  $HOME/tkweather/tkweather.cfg takes the
+     format (defaults shown below):  Any line starting with "#" is 
+     ignored as a comment.
+
+     geometry=+100+100
+     zipcode=76087
+     #BROWSER TO BE INVOKED IF USER PRESSES SHIFT-CLICK ON BUTTON. 
+     browser=mozilla
+     #URL USED FOR SCRAPING WEATHER DATA.
+     weatherurl=http://www.w3.weather.com/weather/local/<ZIP>?lswe=<ZIP>&lwsa=WeatherLocalUndeclared
+     #COMMAND URL TO BE INVOKED IF USER PRESSES SHIFT-CLICK ON BUTTON.
+     #UP TO 3 URLS MAY BE ENTERED FOR EACH OF THE 3 STATIONS SEPARATED BY "|". 
+     weathercmd=http://www.wunderground.com/cgi-bin/findweather/getForecast?query=<ZIP> &
+     #MILLISECONDS TO WAIT BETWEEN QUERIES TO THE WEATHER URL.
+     checkmsec=900000
+     #BUTTON RELIEF (CHOICES:  flat, groove, raised, ridge, sunken)
+     relief=ridge
+     #INDEX:  "misery": USE OLD "MISERY INDEX" (HEAT+DEWPOINT),
+     #OTHERWISE ("heat") USE MODERN "HEAT INDEX" AS REPORTED.
+     #NOTE:  WIND CHILL IS REPORTED IF TEMP. < 70 AND WIND >= 10 MPH
+     #REGARDLESS OF THIS SETTING!
+     index=heat
+     #OVERRIDEDIRECT ARGUMENT 0=MANAGED BY WINDOWMANAGER (DECORATE)
+     #1=BYPASS WINDOWMANAGER (NO DECORATION).  USE 0 IF DOCKING IN
+     #WINDOWMAKER OR AFTERSTEP.
+     windowmgr=0
+     #STARTUP ICON IMAGE (MUST BE IN $ENV{HOME}/tkweather/)
+     startimage=tkweather.gif
+     #NORMAL TEXT FOREGROUND COLOR
+     normalcolor=green
+     #WARNING COLOR
+     warningcolor=yellow
+     #ALERT COLOR
+     alertcolor=red
+     #NORMAL BACKGROUND COLOR
+     bgcolor=black
+     #SHOW WARNING/ALERT COLOR IN BACKGROUND OF ICON (0=OLD WAY - BGCOLOR)
+     bgwarn=1
+     #CONVERT TEMPS AND WINDSPEED TO METRIC, IF SET.
+     metric=0
+     #DO NOT DISPLAY MESSAGE TO STDERR WHEN FETCHING WEATHER FROM WEB:
+     silent=0
+     #DO NOT DUMP DEBUG INFORMATION TO STDERR
+     debug=0
+
+     5)  Copy the image "tkweather.gif" to $HOME/tkweather/
+
+     6)  Copy tkweather.pl to somewhere in your PATH or wherever you 
+     want to be able to run it from.  Make sure line 1 points to your
+     perl interpreter.
+
+     7)  To make this app appear in your AfterStep/Windowmaker "wharf", 
+     add the following to your config file:
+     *Wharf Tkwather - MaxSwallow "Tkweather" tkweather.pl &
+
+     8)  run tkweather.pl -h to view which options can be set on the 
+     command-line (options set on the command line overrule those set 
+     in the configuration file).
+
+     9)  Enjoy!
 

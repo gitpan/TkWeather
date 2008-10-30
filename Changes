@@ -13,3 +13,6 @@ v1.33: Fix for slight changes in Wunderground site (icon, wind, and visibility).
 v1.34: -not released-
 v1.35: Fix for slight changes in Wunderground & NOAA sites.
 v1.37: Fix to accomodate alternate url in NOAA for the icon image.
+v1.8:  Add fourth weather site option (Weatherbug).
+v1.83: Create Windows version, Windows self-extracting setup and unify 
+       with Linux version.
